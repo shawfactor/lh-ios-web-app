@@ -379,6 +379,22 @@ public function add_settings_link( $links, $file ) {
 	return $links;
 }
 
+public function remove_apple_touch_site_icon_tag( $meta_tags ) {
+
+foreach( $meta_tags as $meta_tag ) {
+
+if (!strpos($meta_tag, "apple-touch-icon-precomposed")){
+
+$tag[] = $meta_tag;
+
+}
+
+}
+ 
+   return $tag;
+}
+
+
 
 
 function __construct() {
@@ -394,7 +410,7 @@ add_action( 'wp_enqueue_scripts', array($this,"enqueue_scripts"));
 add_action('admin_enqueue_scripts', array($this,"add_admin_scripts"));
 add_action('admin_menu', array($this,"plugin_menu"));
 add_filter('plugin_action_links', array($this,"add_settings_link"), 10, 2);
-
+add_filter( 'site_icon_meta_tags', array($this,"remove_apple_touch_site_icon_tag"), 10, 1);
 
 
 
@@ -406,22 +422,8 @@ add_filter('plugin_action_links', array($this,"add_settings_link"), 10, 2);
 $lh_ios_web_app = new LH_ios_web_app_plugin();
 
 
-function prefix_custom_site_icon_tag( $meta_tags ) {
 
-foreach( $meta_tags as $meta_tag ) {
 
-if (!strpos($meta_tag, "apple-touch-icon-precomposed")){
-
-$tag[] = $meta_tag;
-
-}
-
-}
- 
-   return $tag;
-}
-
-add_filter( 'site_icon_meta_tags', 'prefix_custom_site_icon_tag' );
 
 
 ?>
